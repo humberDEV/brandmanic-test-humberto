@@ -88,7 +88,6 @@ p {
 
 .container {
   position: relative;
-  /* border-radius: 3em 6.5em 3em 6.5em; */
 }
 
 .profile-image {
@@ -96,7 +95,7 @@ p {
   max-width: 200px;
   height: 200px;
   object-fit: cover;
-  border: 0.3em aqua solid;
+  border: 0.3em #5daa99 solid;
   border-radius: 3em 6.5em 3em 6.5em;
   transform-origin: center;
 }
@@ -111,11 +110,11 @@ p {
   height: inherit;
   border-radius: 3em 6.5em 3em 6.5em;
   border: transparent;
-  border: 0.3em aqua solid;
+  border: 0.3em #5daa99 solid;
   margin-bottom: 0.3em;
   opacity: 0;
-  transition: 0.3s ease;
-  background-color: #b8871d;
+  transition: 0.2s ease;
+  background-color: #f7a902;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -124,6 +123,12 @@ p {
 
 .container:hover .overlay {
   opacity: 0.8;
+}
+
+.location-description {
+  align-items: center;
+  display: flex;
+  justify-content: center;
 }
 
 .profile-name {
@@ -135,7 +140,6 @@ p {
 .stat {
   display: flex;
   align-items: center;
-  /* justify-content: space-between; */
 }
 
 .stat i {

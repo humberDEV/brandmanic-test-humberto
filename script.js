@@ -1,4 +1,3 @@
-// Load influencers from Json
 const fetchInflucard = async () => {
   try {
     const response = await fetch("http://127.0.0.1:5500/src/data.json");
@@ -14,10 +13,8 @@ const fetchInflucard = async () => {
   }
 };
 
-// Meter datos de la influcard en la tarjeta
 function createCard(data) {
   const cardContainer = document.getElementById("cardContainer");
-
   const newCard = document.createElement("div");
   newCard.className = "card";
 
@@ -39,11 +36,11 @@ function createCard(data) {
               ${data.username}
             </p>
             <p>${data.gender === "1" ? "Mujer" : "Hombre"}, ${data.age} años</p>
-            <p>
+            <p class="location-description">
               <img src="./src/spain_flag.jpg" alt="Bandera" class="flag-icon" />
-              España
+              ${data.country === "ES" ? "España" : ""}
             </p>
-            <p>Fotografía, Veggie</p>
+            <p>${data.interests.split(",").slice(0, 2) + ",..."}</p>
           </div>
         </div>
 
@@ -55,35 +52,35 @@ function createCard(data) {
             <i class="fa-solid fa-people-group"></i>
             <p class="stat-label">
               <p class="stat-text">Audiencia:</p>
-              <p class="stat-data">661.01k</p>
+              <p class="stat-data">${data.followers_formated}</p>
             </p>
           </div>
           <div class="stat">
             <i class="fa-solid fa-user-xmark"></i>
             <p class="stat-label">
               <p class="stat-text">Fakes:</p>
-              <p class="stat-data">32.57k</p>
+              <p class="stat-data">${data.fake_followers_formated} K</p>
             </p>
           </div>
           <div class="stat">
             <i class="fa-solid fa-heart"></i>
             <p class="stat-label">
               <p class="stat-text">Media Eng:</p>
-              <p class="stat-data">11.82k</p>
+              <p class="stat-data">${data.er_audiencia} %</p>
             </p>
           </div>
           <div class="stat">
             <i class="fa-solid fa-heart-pulse"></i>
             <p class="stat-label">
               <p class="stat-text">Eng Rate:</p>
-              <p class="stat-data">1.93%</p>
+              <p class="stat-data">${data.avg_engagement_formated}</p>
             </p>
           </div>
           <div class="stat">
             <i class="fa-solid fa-eye"></i>
             <p class="stat-label">
               <p class="stat-text">Impresiones:</p>
-              <p class="stat-data">272.68k</p>
+              <p class="stat-data">${data.avg_impressions_formated}</p>
             </p>
           </div>
         </div>
@@ -96,4 +93,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   for (let i = 0; i < 9; i++) {
     createCard(data);
   }
+
+  const profileImages = document.querySelectorAll(".container");
+
+  profileImages.forEach((image) => {
+    image.addEventListener("click", async () => {
+      Swal.fire({
+        timer: 2000,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
+    });
+  });
 });
