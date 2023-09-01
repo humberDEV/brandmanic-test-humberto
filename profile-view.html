@@ -3,14 +3,61 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="profile-view.css" />
+    <link rel="icon" href="./src/brandmanic-icon.png" />
+    <title>Profile View</title>
   </head>
   <body>
-    <header class="navbar">
-      <img
-        src="./src/brand-manic-logo.png"
-        alt="BrandManic Logo"
-        class="principal-logo"
-      />
-    </header>
+    <div class="navbar">
+      <div class="profile">
+        <img id="profile_image" class="profile-image" alt="Foto de perfil" />
+        <div class="user-info">
+          <div class="username">gracyvillareal</div>
+          <div class="instagram">
+            <i class="fa-brands fa-instagram"></i>
+            gracyvillareal
+          </div>
+          <p id="account-info">{info}</p>
+        </div>
+      </div>
+      <div class="content">
+        <!-- Aquí puedes agregar tus gráficas de AmCharts -->
+        <div id="chartDiv" class="grid"></div>
+      </div>
+      <div class="right-column">
+        <a id="exit-button"><i class="fas fa-sign-out-alt"></i> Salir</a><br />
+        <a><i class="fas fa-download"></i> Descargar Influcard</a><br />
+        <a><i class="fas fa-user"></i> Ver perfil</a><br />
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="column">
+        <div id="audience">AUDIENCIA</div>
+        <div id="audience-stats">Elemento 2</div>
+        <div id="age-graph" class="auto-height">Elemento 3</div>
+        <section id="double-column">
+          <div id="gender-graph">Elemento 4</div>
+          <div id="country-graph">Elemento 5</div>
+        </section>
+      </div>
+      <div class="column">
+        <div id="post">PUBLICACIONES</div>
+        <div id="territory-graph" class="auto-height">Elemento 2</div>
+        <div id="post-horary-graph">Elemento 3</div>
+        <div id="brands-graph">Elemento 4</div>
+      </div>
+      <div class="column">
+        <div id="rate">DESEMPEÑO</div>
+        <div class="auto-height">Elemento 2</div>
+        <div class="auto-height">Elemento 3</div>
+        <div class="auto-height">Elemento 4</div>
+        <div class="auto-height">Elemento 5</div>
+        <div id="engagement-rate-graph">Elemento 6</div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="load-charts.js"></script>
   </body>
 </html>

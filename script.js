@@ -35,7 +35,6 @@ document.addEventListener("DOMContentLoaded", async () => {
           .then((html) => {
             profileViewContainer.innerHTML = html;
             document.body.appendChild(profileViewContainer);
-
             setTimeout(() => {
               profileViewContainer.classList.add("active");
             }, 100);
