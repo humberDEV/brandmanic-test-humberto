@@ -6,20 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BrandManic Test</title>
     <link rel="stylesheet" href="styles.css" />
-    <script src="script.js"></script>
-  </head>
-  <body>
-    <!-- Scripts externos -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
     />
-    <script
-      src="https://kit.fontawesome.com/fed08599ee.js"
-      crossorigin="anonymous"
-    ></script>
+  </head>
 
+  <body>
     <header class="navbar">
       <img
         src="./src/brand-manic-logo.png"
@@ -27,6 +20,76 @@
         class="principal-logo"
       />
     </header>
-    <section class="card-container" id="cardContainer"></section>
+    
+    <section class="card-container" id="card-container">
+      <div class="card">
+        <div class="card-left">
+          <div class="container">
+            <img class="profile-image" id="profile_image" src="" alt="Foto de perfil" />
+            <div class="overlay">
+              <div class="text">Ver influcard</div>
+            </div>
+          </div>
+          <div class="profile-info">
+            <p>
+              <i id="rrss_icon" className="" alt=""></i>
+              <span id="username"></span>
+            </p>
+            <p id="gender_age"></p>
+            <p class="location-description" id="location_description">
+              <img src="./src/spain_flag.jpg" alt="Bandera" class="flag-icon"/>
+            </p>
+            <p id="interests"></p>
+          </div>
+        </div>
+  
+        <div class="card-right">
+          <h1 class="profile-name" id="profile_name"></h1>
+          <div class="stat">
+            <i class="fa-solid fa-people-group"></i>
+            <p class="stat-label">
+              <p class="stat-text">Audiencia:</p>
+              <p class="stat-data" id="audience_stat"></p>
+            </p>
+          </div>
+          <div class="stat">
+            <i class="fa-solid fa-user-xmark"></i>
+            <p class="stat-label">
+              <p class="stat-text">Fakes:</p>
+              <p class="stat-data" id="fakes_stat"></p>
+            </p>
+          </div>
+          <div class="stat">
+            <i class="fa-solid fa-heart"></i>
+            <p class="stat-label">
+              <p class="stat-text">Media Eng:</p>
+              <p class="stat-data" id="media_eng_stat"></p>
+            </p>
+          </div>
+          <div class="stat">
+            <i class="fa-solid fa-heart-pulse"></i>
+            <p class="stat-label">
+              <p class="stat-text">Eng Rate:</p>
+              <p class="stat-data" id="eng_rate_stat"></p>
+            </p>
+          </div>
+          <div class="stat">
+            <i class="fa-solid fa-eye"></i>
+            <p class="stat-label">
+              <p class="stat-text">Impresiones:</p>
+              <p class="stat-data" id="impressions_stat"></p>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scripts  -->
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script
+      src="https://kit.fontawesome.com/fed08599ee.js"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>

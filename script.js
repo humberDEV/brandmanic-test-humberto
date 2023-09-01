@@ -13,86 +13,9 @@ const fetchInflucard = async () => {
   }
 };
 
-function createCard(data) {
-  const cardContainer = document.getElementById("cardContainer");
-  const newCard = document.createElement("div");
-  newCard.className = "card";
-
-  newCard.innerHTML = `
-        <div class="card-left">
-          <div class="container">
-            <img
-              class="profile-image"
-              src="${data.account_picture}"
-              alt="Foto de perfil"
-            />
-            <div class="overlay">
-              <div class="text">Ver influcard</div>
-            </div>
-          </div>
-          <div class="profile-info">
-            <p>
-              <i class="${data.rrss_icon} alt="${data.rrss_name}"></i>
-              ${data.username}
-            </p>
-            <p>${data.gender === "1" ? "Mujer" : "Hombre"}, ${data.age} años</p>
-            <p class="location-description">
-              <img src="./src/spain_flag.jpg" alt="Bandera" class="flag-icon" />
-              ${data.country === "ES" ? "España" : ""}
-            </p>
-            <p>${data.interests.split(",").slice(0, 2) + ",..."}</p>
-          </div>
-        </div>
-
-        <div class="card-right">
-          <h1 class="profile-name">${
-            data.name.charAt(0).toUpperCase() + data.name.slice(1)
-          }</h1>
-          <div class="stat">
-            <i class="fa-solid fa-people-group"></i>
-            <p class="stat-label">
-              <p class="stat-text">Audiencia:</p>
-              <p class="stat-data">${data.followers_formated}</p>
-            </p>
-          </div>
-          <div class="stat">
-            <i class="fa-solid fa-user-xmark"></i>
-            <p class="stat-label">
-              <p class="stat-text">Fakes:</p>
-              <p class="stat-data">${data.fake_followers_formated} K</p>
-            </p>
-          </div>
-          <div class="stat">
-            <i class="fa-solid fa-heart"></i>
-            <p class="stat-label">
-              <p class="stat-text">Media Eng:</p>
-              <p class="stat-data">${data.er_audiencia} %</p>
-            </p>
-          </div>
-          <div class="stat">
-            <i class="fa-solid fa-heart-pulse"></i>
-            <p class="stat-label">
-              <p class="stat-text">Eng Rate:</p>
-              <p class="stat-data">${data.avg_engagement_formated}</p>
-            </p>
-          </div>
-          <div class="stat">
-            <i class="fa-solid fa-eye"></i>
-            <p class="stat-label">
-              <p class="stat-text">Impresiones:</p>
-              <p class="stat-data">${data.avg_impressions_formated}</p>
-            </p>
-          </div>
-        </div>
-  `;
-  cardContainer.appendChild(newCard);
-}
-
 document.addEventListener("DOMContentLoaded", async () => {
   const data = await fetchInflucard();
-  for (let i = 0; i < 9; i++) {
-    createCard(data);
-  }
+  fillCard(data);
 
   const profileImages = document.querySelectorAll(".container");
 
@@ -103,7 +26,104 @@ document.addEventListener("DOMContentLoaded", async () => {
         didOpen: () => {
           Swal.showLoading();
         },
+      }).then(() => {
+        const profileViewContainer = document.createElement("div");
+        profileViewContainer.classList.add("profile-view-enter");
+
+        fetch("profile-view.html")
+          .then((response) => response.text())
+          .then((html) => {
+            profileViewContainer.innerHTML = html;
+            document.body.appendChild(profileViewContainer);
+
+            setTimeout(() => {
+              profileViewContainer.classList.add("active");
+            }, 100);
+          });
       });
     });
   });
 });
+
+function fillCard(data) {
+  const {
+    rrss_icon,
+    account_picture,
+    username,
+    gender,
+    age,
+    country,
+    interests,
+    name,
+    followers_formated,
+    fake_followers_formated,
+    avg_engagement_formated,
+    er_audiencia,
+    avg_impressions_formated,
+  } = data;
+
+  const profileImage = document.getElementById("profile_image");
+  const rrssIcon = document.getElementById("rrss_icon");
+  const usernameElement = document.getElementById("username");
+  const genderAge = document.getElementById("gender_age");
+  const locationDescription = document.getElementById("location_description");
+  const interestsElement = document.getElementById("interests");
+  const profileName = document.getElementById("profile_name");
+  const audienceStat = document.getElementById("audience_stat");
+  const fakesStat = document.getElementById("fakes_stat");
+  const mediaEngStat = document.getElementById("media_eng_stat");
+  const engRateStat = document.getElementById("eng_rate_stat");
+  const impressionsStat = document.getElementById("impressions_stat");
+
+  setClass(rrssIcon, rrss_icon);
+  setImage(profileImage, account_picture);
+  setText(usernameElement, username);
+  setGenderAge(genderAge, gender, age);
+  setLocation(locationDescription, country);
+  setInterests(interestsElement, interests);
+  setName(profileName, name);
+  setText(audienceStat, followers_formated);
+  setFakeStat(fakesStat, fake_followers_formated);
+  setText(mediaEngStat, avg_engagement_formated);
+  setEngRate(engRateStat, er_audiencia);
+  setText(impressionsStat, avg_impressions_formated);
+}
+
+function setClass(element, className) {
+  element.className = className;
+}
+
+function setImage(imageElement, src) {
+  imageElement.src = src;
+  imageElement.alt = "Foto de perfil";
+}
+
+function setText(element, text) {
+  element.textContent = text;
+}
+
+function setGenderAge(element, gender, age) {
+  const genderText = gender === "1" ? "Mujer" : "Hombre";
+  element.textContent = `${genderText}, ${age} años`;
+}
+
+function setLocation(element, country) {
+  const countryText = country === "ES" ? "España" : "";
+  element.append(countryText);
+}
+
+function setInterests(element, interests) {
+  element.textContent = interests.split(",").slice(0, 2).join(", ") + ", ...";
+}
+
+function setName(element, name) {
+  element.textContent = name.charAt(0).toUpperCase() + name.slice(1);
+}
+
+function setFakeStat(element, fakeFollowers) {
+  element.textContent = `${fakeFollowers} %`;
+}
+
+function setEngRate(element, erAudiencia) {
+  element.textContent = `${erAudiencia} %`;
+}
