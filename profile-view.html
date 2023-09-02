@@ -15,7 +15,7 @@
           <div class="username">gracyvillareal</div>
           <div class="instagram">
             <i class="fa-brands fa-instagram"></i>
-            gracyvillareal
+            <span>gracyvillareal</span>
           </div>
           <p id="account-info">{info}</p>
         </div>
@@ -35,9 +35,15 @@
       <div class="column">
         <div id="audience">AUDIENCIA</div>
         <div id="audience-stats">Elemento 2</div>
-        <div id="age-graph" class="auto-height">Elemento 3</div>
+        <div id="age-graph-container" class="auto-height">
+          Distribución por edad
+          <graph id="age-graph"></graph>
+        </div>
         <section id="double-column">
-          <div id="gender-graph">Elemento 4</div>
+          <div id="gender-graph-container">
+            Distribución por género
+            <graph id="gender-graph"></graph>
+          </div>
           <div id="country-graph">Elemento 5</div>
         </section>
       </div>
@@ -59,5 +65,13 @@
 
     <!-- Scripts -->
     <script src="load-charts.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script
+      src="https://kit.fontawesome.com/fed08599ee.js"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>

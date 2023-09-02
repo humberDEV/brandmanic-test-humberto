@@ -22,6 +22,7 @@ body {
 .navbar {
   display: flex;
   align-items: center;
+  justify-content: center;
   height: 15vh;
 }
 
@@ -29,12 +30,12 @@ body {
 .profile {
   display: flex;
   align-items: center;
-  margin-left: 20px;
 }
 
 .profile img {
   border-radius: 5em 5em 1em 5em;
   margin-right: 10px;
+  margin-left: 20px;
   width: 100px;
   height: 100px;
   border: 2px solid white;
@@ -50,13 +51,19 @@ body {
 }
 
 .profile .user-info .username {
-  font-weight: bold;
-  font-size: 1.2em;
+  font-weight: 500;
+  font-size: 1.6em;
+  margin-bottom: 0.2em;
 }
 
 .profile .user-info .instagram {
   display: flex;
+  align-items: center;
   color: #b4d0e5;
+}
+
+.profile .user-info .instagram > span {
+  margin-left: 5px;
 }
 
 /* Contenido */
@@ -66,7 +73,7 @@ body {
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   padding: 20px;
-  height: 85vh;
+  height: 80vh;
 }
 
 /* Columnas */
@@ -83,6 +90,7 @@ body {
   padding: 20px;
   box-shadow: var(--box-shadow);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -91,12 +99,21 @@ body {
   flex-grow: 1;
 }
 
+.column > div > graph,
+graph {
+  background: none;
+  border: none;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  box-shadow: none;
+}
+
 /* Columna derecha */
 .right-column {
   margin-left: auto;
-  text-align: right;
-  padding: 20px;
-  gap: 10px;
+  text-align: justify;
+  margin-right: 20px;
 }
 
 .right-column a {
@@ -118,6 +135,7 @@ body {
 #double-column > div {
   flex-grow: 1;
   margin: 0 5px;
+  width: 50%;
   margin-top: 10px;
   height: 25vh;
 }
@@ -126,7 +144,7 @@ body {
 #post,
 #rate {
   height: 4vh;
-  font-weight: 900;
+  font-weight: 600;
 }
 
 #audience-stats,
