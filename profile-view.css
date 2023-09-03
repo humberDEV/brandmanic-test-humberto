@@ -147,9 +147,12 @@ graph {
   font-weight: 600;
 }
 
-#audience-stats,
-#post-horary-graph {
+#audience-stats {
   height: 8vh;
+}
+
+#post-horary-graph-container {
+  height: 15vh;
 }
 
 #brands-graph,
