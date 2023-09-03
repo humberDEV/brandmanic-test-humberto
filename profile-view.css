@@ -160,27 +160,52 @@ graph {
   height: 15vh;
 }
 
-#brands-graph,
+#brands-graph-card,
 #engagement-rate-graph-card {
   height: 18vh;
 }
 
-.age-bar {
+#country-graph-card {
+  justify-content: center;
+  align-items: center;
+}
+
+.age-bar,
+.country-bar {
   display: flex;
   align-items: center;
   width: 100%;
   max-width: 500px;
+  margin-bottom: 10px;
+}
+
+.country-bar {
+  margin-top: 10px;
   margin-bottom: 15px;
 }
 
-.age-label {
+.age-label,
+.country-label {
   flex-basis: 50px;
   text-align: center;
   padding-right: 2em;
 }
 
-.age-progressbar {
+.age-percentage,
+.country-percentage {
+  flex-basis: 60px;
+  text-align: justify;
+  padding-left: 2em;
+}
+
+.age-progressbar,
+.country-progressbar {
   flex-grow: 1;
+}
+
+.country-flag {
+  width: 20;
+  height: 15px;
 }
 
 progress {
@@ -196,8 +221,38 @@ progress::-webkit-progress-value {
   border-radius: 7px;
 }
 
-.age-percentage {
-  flex-basis: 60px;
-  text-align: justify;
-  padding-left: 2em;
+progress.country-progressbar::-webkit-progress-value {
+  background-color: #dc686c;
+  border-radius: 7px;
+}
+
+#brands-graph-card {
+  text-align: center;
+  contain: content;
+}
+
+.brands-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  max-width: fit-content;
+  margin: 0 auto;
+}
+
+.brand-item {
+  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.brand-image {
+  max-width: 100%;
+  height: auto;
+  width: 60px;
+}
+
+.brand-name {
+  margin-top: 5px;
+  font-size: 16px;
 }

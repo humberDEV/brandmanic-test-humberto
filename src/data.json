@@ -1185,19 +1185,19 @@
       {
         "type": "Noche",
         "value": 28.71,
-        "href": "https://example.com/images/noche.png",
+        "href": "/assets/img/luna.png",
         "color": "#5B6F8E"
       },
       {
         "type": "Tarde",
         "value": 35.64,
-        "href": "https://example.com/images/tarde.png",
+        "href": "/assets/img/tarde.png",
         "color": "#D39E42"
       },
       {
         "type": "Mañana",
         "value": 35.64,
-        "href": "https://static.vecteezy.com/system/resources/previews/009/663/324/non_2x/sun-sun-ray-icon-transparent-free-png.png",
+        "href": "/assets/img/sol.png",
         "color": "#EAE35E"
       }
     ],
@@ -1248,7 +1248,7 @@
         "country_short": "Otros",
         "country": "Otros",
         "value": 27.19,
-        "href": "/assets/flags/4x3/other.svg"
+        "href": "/assets/flags/4x3/xx.svg"
       }
     ],
     "insight_perc_other": 31.07,

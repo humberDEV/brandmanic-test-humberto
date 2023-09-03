@@ -26,6 +26,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   generateTerritoryGraph(data);
   generateHoraryGraph(data);
   generateEngagementDayGraph(data);
+  generateCountryGraph(data);
+  generateBrandsImages(data);
 
   const exitButton = document.getElementById("exit-button");
   exitButton.addEventListener("click", () => {});
@@ -97,7 +99,7 @@ const generateTerritoryGraph = (data) => {
 
   const territoryMap = {};
   let totalPercentage = 0;
-  let maxCategories = 6;
+  let maxCategories = 8;
 
   territoryData.forEach((item, index) => {
     const territoryName = item.territory_name.name;
@@ -206,32 +208,22 @@ const generateGenderGraph = (data) => {
 };
 
 const generateCountryGraph = (data) => {
-  const ageData = data.insightsAge;
+  const countryData = data.top_countries_formated;
 
-  let totalPercentage = 0;
+  const countryChartContainer = document.getElementById("country-graph");
 
-  ageData.forEach((item) => {
-    const ageValue = item.age_range;
-    const ageRange = ageRangeMapping[ageValue];
-    const percentage = parseFloat(item.percentage.replace(",", "."));
-    if (ageMap[ageRange] !== undefined) {
-      ageMap[ageRange] += percentage;
-      totalPercentage += percentage;
-    }
-  });
-
-  const ageChartContainer = document.getElementById("age-graph");
-
-  Object.keys(ageMap).forEach((ageRange) => {
-    const percentage = ((ageMap[ageRange] / totalPercentage) * 100).toFixed(2);
-    const ageBar = document.createElement("div");
-    ageBar.classList.add("age-bar");
-    ageBar.innerHTML = `
-      <label class="age-label">${ageRange}</label>
-      <progress class="age-progressbar" max="100" value="${percentage}"></progress>
-      <label class="age-percentage">${percentage}%</label>
+  countryData.forEach((item) => {
+    const countryBar = document.createElement("div");
+    countryBar.classList.add("country-bar");
+    countryBar.innerHTML = `
+      <img src="./${item.href}" alt="${item.country}" class="country-flag">
+      <label class="country-label">${item.country_short}</label>
+      <progress class="country-progressbar" max="100" value="${parseFloat(
+        item.value
+      ).toFixed(2)}"></progress>
+      <label class="country-percentage">${item.value}%</label>
     `;
-    ageChartContainer.appendChild(ageBar);
+    countryChartContainer.appendChild(countryBar);
   });
 };
 
@@ -276,16 +268,18 @@ const generateHoraryGraph = (data) => {
     let bulletContainer = series.bullets.push(new am4core.Container());
     bulletContainer.horizontalCenter = "left";
     bulletContainer.verticalCenter = "middle";
+    bulletContainer.dx = -20;
 
     let bullet = bulletContainer.createChild(am4core.Circle);
-    bullet.horizontalCenter = "left";
-    bullet.radius = 12;
+    bullet.horizontalCenter = "middle";
+    bulletContainer.verticalCenter = "middle";
+    bullet.radius = 15;
 
     let image = bulletContainer.createChild(am4core.Image);
     image.horizontalCenter = "middle";
     image.verticalCenter = "middle";
-    image.width = 16;
-    image.height = 16;
+    image.width = 20;
+    image.height = 20;
     image.adapter.add("href", (href, target) => {
       let dataItem = target.dataItem;
       if (dataItem && dataItem.dataContext) {
@@ -305,7 +299,7 @@ const generateEngagementDayGraph = (data) => {
     let chart = am4core.create("engagement-rate-graph", am4charts.XYChart);
 
     chart.data = dayData;
-    chart.padding(10);
+    chart.padding(10, 40, -10, 0);
 
     let categoryAxisX = chart.xAxes.push(new am4charts.CategoryAxis());
     categoryAxisX.dataFields.category = "day";
@@ -315,8 +309,6 @@ const generateEngagementDayGraph = (data) => {
     categoryAxisX.renderer.labels.template.verticalCenter = "middle";
 
     let valueAxisY = chart.yAxes.push(new am4charts.ValueAxis());
-    valueAxisY.min = 0;
-    valueAxisY.max = 3;
 
     valueAxisY.renderer.labels.template.adapter.add("text", function (text) {
       return text + "%";
@@ -333,4 +325,24 @@ const generateEngagementDayGraph = (data) => {
       return chart.colors.getIndex(target.dataItem.index);
     });
   });
+};
+
+const generateBrandsImages = (data) => {
+  const brandsData = data.brands_images.slice(0, 8);
+  const brandsGraphContainer = document.getElementById("brands-graph");
+
+  const brandsGrid = document.createElement("div");
+  brandsGrid.classList.add("brands-grid");
+
+  brandsData.map((item) => {
+    const brandItem = document.createElement("div");
+    brandItem.classList.add("brand-item");
+    brandItem.innerHTML = `
+      <img src="${item.image}" alt="${item.name}" class="brand-image"/>
+      <label class="brand-name">${item.name}</label>
+    `;
+    brandsGrid.appendChild(brandItem);
+  });
+
+  brandsGraphContainer.appendChild(brandsGrid);
 };
