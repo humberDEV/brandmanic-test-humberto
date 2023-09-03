@@ -21,7 +21,6 @@
         </div>
       </div>
       <div class="content">
-        <!-- Aquí puedes agregar tus gráficas de AmCharts -->
         <div id="chartDiv" class="grid"></div>
       </div>
       <div class="right-column">
@@ -33,27 +32,30 @@
 
     <div class="content">
       <div class="column">
-        <div id="audience">AUDIENCIA</div>
+        <div id="audience" class="circle-icon">
+          <i class="fa-solid fa-user-group"></i>
+          AUDIENCIA
+        </div>
         <div id="audience-stats">Elemento 2</div>
-        <div id="age-graph-container" class="auto-height">
+        <div id="age-graph-card" class="auto-height">
           Distribución por edad
           <graph id="age-graph"></graph>
         </div>
         <section id="double-column">
-          <div id="gender-graph-container">
+          <div id="gender-graph-card">
             Distribución por género
-            <graph id="gender-graph"></graph>
+            <graph id="gender-graph"> </graph>
           </div>
           <div id="country-graph">Elemento 5</div>
         </section>
       </div>
       <div class="column">
         <div id="post">PUBLICACIONES</div>
-        <div id="territory-graph-container" class="auto-height">
+        <div id="territory-graph-card" class="auto-height">
           Distribución de publicaciones por territorio
           <graph id="territory-graph"></graph>
         </div>
-        <div id="post-horary-graph-container">
+        <div id="post-horary-graph-card">
           Franja horaria de sus publicaciones
           <graph id="post-horary-graph"></graph>
         </div>
@@ -65,7 +67,10 @@
         <div class="auto-height">Elemento 3</div>
         <div class="auto-height">Elemento 4</div>
         <div class="auto-height">Elemento 5</div>
-        <div id="engagement-rate-graph">Elemento 6</div>
+        <div id="engagement-rate-graph-card">
+          Engagement rate según día de publicación
+          <graph id="engagement-rate-graph"></graph>
+        </div>
       </div>
     </div>
 

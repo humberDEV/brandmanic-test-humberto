@@ -1172,8 +1172,35 @@
         "engrate": "1.94525"
       }
     ],
-    "post_day_json": "[{\"day\":\"L\",\"rate\":1.71},{\"day\":\"M\",\"rate\":2},{\"day\":\"X\",\"rate\":1.85},{\"day\":\"J\",\"rate\":1.84},{\"day\":\"V\",\"rate\":1.87},{\"day\":\"S\",\"rate\":2.11},{\"day\":\"D\",\"rate\":1.95}]",
-    "post_moment_json": "[{\"type\":\"Noche\",\"value\":28.712871287128714,\"href\":\"\\/assets\\/img\\/noche.png\",\"color\":\"#5B6F8E\"},{\"type\":\"Tarde\",\"value\":35.64356435643565,\"href\":\"\\/assets\\/img\\/tarde.png\",\"color\":\"#D39E42\"},{\"type\":\"Ma\\u00f1ana\",\"value\":35.64356435643565,\"href\":\"\\/assets\\/img\\/ma\\u00f1ana.png\",\"color\":\"#EAE35E\"}]",
+    "post_day_json": [
+      { "day": "L", "rate": 1.71 },
+      { "day": "M", "rate": 2 },
+      { "day": "X", "rate": 1.85 },
+      { "day": "J", "rate": 1.84 },
+      { "day": "V", "rate": 1.87 },
+      { "day": "S", "rate": 2.11 },
+      { "day": "D", "rate": 1.95 }
+    ],
+    "post_moment_json": [
+      {
+        "type": "Noche",
+        "value": 28.71,
+        "href": "https://example.com/images/noche.png",
+        "color": "#5B6F8E"
+      },
+      {
+        "type": "Tarde",
+        "value": 35.64,
+        "href": "https://example.com/images/tarde.png",
+        "color": "#D39E42"
+      },
+      {
+        "type": "Mañana",
+        "value": 35.64,
+        "href": "https://static.vecteezy.com/system/resources/previews/009/663/324/non_2x/sun-sun-ray-icon-transparent-free-png.png",
+        "color": "#EAE35E"
+      }
+    ],
     "reach_formated_graph": 100,
     "resonance_formated_graph": 60,
     "relevance_formated_graph": 85,

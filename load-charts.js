@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   generateGenderGraph(data);
   generateTerritoryGraph(data);
   generateHoraryGraph(data);
+  generateEngagementDayGraph(data);
 
   const exitButton = document.getElementById("exit-button");
   exitButton.addEventListener("click", () => {});
@@ -52,7 +53,7 @@ const generateAgeGraph = (data) => {
     25: "25-34",
     35: "35-44",
     45: "45-64",
-    65: "+65",
+    65: "65 +",
   };
 
   const ageMap = {
@@ -61,7 +62,7 @@ const generateAgeGraph = (data) => {
     "25-34": 0,
     "35-44": 0,
     "45-64": 0,
-    "+65": 0,
+    "65 +": 0,
   };
 
   let totalPercentage = 0;
@@ -76,42 +77,18 @@ const generateAgeGraph = (data) => {
     }
   });
 
-  const ageChartData = Object.keys(ageMap).map((ageRange) => ({
-    ageRange,
-    percentage: ((ageMap[ageRange] / totalPercentage) * 100).toFixed(2),
-  }));
+  const ageChartContainer = document.getElementById("age-graph");
 
-  am4core.ready(function () {
-    am4core.useTheme(am4themes_animated);
-    var chart = am4core.create("age-graph", am4charts.XYChart);
-
-    chart.data = ageChartData;
-
-    var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
-    categoryAxis.dataFields.category = "ageRange";
-    categoryAxis.renderer.minGridDistance = 0;
-    categoryAxis.renderer.grid.template.disabled = true;
-
-    var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
-    valueAxis.min = 0;
-
-    valueAxis.renderer.labels.template.adapter.add("text", (text) => {
-      return "";
-    });
-
-    var series = chart.series.push(new am4charts.ColumnSeries());
-    series.dataFields.valueX = "percentage";
-    series.dataFields.categoryY = "ageRange";
-    series.columns.template.tooltipText = "{categoryY}: {valueX}%";
-    series.columns.template.width = am4core.percent(100);
-    series.columns.template.strokeOpacity = 0;
-    series.columns.template.column.cornerRadiusBottomRight = 5;
-    series.columns.template.column.cornerRadiusTopRight = 5;
-    var labelBullet = series.bullets.push(new am4charts.LabelBullet());
-    labelBullet.label.text = "{valueX}%";
-    labelBullet.label.truncate = false;
-    labelBullet.label.hideOversized = false;
-    labelBullet.label.horizontalCenter = "right";
+  Object.keys(ageMap).forEach((ageRange) => {
+    const percentage = ((ageMap[ageRange] / totalPercentage) * 100).toFixed(2);
+    const ageBar = document.createElement("div");
+    ageBar.classList.add("age-bar");
+    ageBar.innerHTML = `
+      <label class="age-label">${ageRange}</label>
+      <progress class="age-progressbar" max="100" value="${percentage}"></progress>
+      <label class="age-percentage">${percentage}%</label>
+    `;
+    ageChartContainer.appendChild(ageBar);
   });
 };
 
@@ -145,45 +122,46 @@ const generateTerritoryGraph = (data) => {
 
   am4core.ready(function () {
     am4core.useTheme(am4themes_animated);
-    var chart = am4core.create("territory-graph", am4charts.XYChart);
+    let chart = am4core.create("territory-graph", am4charts.XYChart);
+    chart.padding(0, 40, 0, 0);
 
     chart.data = territoryChartData;
 
-    var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+    let categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
     categoryAxis.dataFields.category = "territoryName";
     categoryAxis.renderer.minGridDistance = 0;
     categoryAxis.renderer.grid.template.disabled = true;
+    categoryAxis.renderer.labels.template.fontSize = 11;
 
-    var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
+    let valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
     valueAxis.min = 0;
 
     chart.colors.list = [
-      am4core.color("#FA5733"),
-      am4core.color("#FF5733"),
-      am4core.color("#FFC300"),
-      am4core.color("#4CAF50"),
-      am4core.color("#03A9F4"),
-      am4core.color("#9C27B0"),
-      am4core.color("#E91E63"),
-      am4core.color("#607D8B"),
+      am4core.color("#f7fe6c"),
+      am4core.color("#f9996e"),
+      am4core.color("#ff63f0"),
+      am4core.color("#707cc4"),
+      am4core.color("#fad272"),
     ];
 
-    var series = chart.series.push(new am4charts.ColumnSeries());
+    let series = chart.series.push(new am4charts.ColumnSeries());
     series.dataFields.valueX = "percentage";
     series.dataFields.categoryY = "territoryName";
     series.columns.template.tooltipText = "{categoryY}: {valueX}%";
-    series.columns.template.width = am4core.percent(100);
+    series.columns.template.height = am4core.percent(90);
     series.columns.template.strokeOpacity = 0;
     series.columns.template.column.cornerRadiusBottomRight = 5;
     series.columns.template.column.cornerRadiusTopRight = 5;
     series.columns.template.adapter.add("fill", function (fill, target) {
       return chart.colors.getIndex(target.dataItem.index);
     });
-    var labelBullet = series.bullets.push(new am4charts.LabelBullet());
+    let labelBullet = series.bullets.push(new am4charts.LabelBullet());
     labelBullet.label.text = "{valueX}%";
     labelBullet.label.truncate = false;
     labelBullet.label.hideOversized = false;
     labelBullet.label.horizontalCenter = "right";
+    labelBullet.label.fontSize = 11;
+    labelBullet.label.dx = 20;
   });
 };
 
@@ -198,7 +176,7 @@ const generateGenderGraph = (data) => {
 
   am4core.ready(function () {
     am4core.useTheme(am4themes_animated);
-    var chart = am4core.create("gender-graph", am4charts.PieChart);
+    let chart = am4core.create("gender-graph", am4charts.PieChart);
 
     chart.data = [
       {
@@ -213,7 +191,7 @@ const generateGenderGraph = (data) => {
       },
     ];
 
-    var pieSeries = chart.series.push(new am4charts.PieSeries());
+    let pieSeries = chart.series.push(new am4charts.PieSeries());
     pieSeries.slices.template.cornerRadius = 6;
     pieSeries.dataFields.value = "percentage";
     pieSeries.dataFields.category = "gender";
@@ -227,55 +205,132 @@ const generateGenderGraph = (data) => {
   });
 };
 
+const generateCountryGraph = (data) => {
+  const ageData = data.insightsAge;
+
+  let totalPercentage = 0;
+
+  ageData.forEach((item) => {
+    const ageValue = item.age_range;
+    const ageRange = ageRangeMapping[ageValue];
+    const percentage = parseFloat(item.percentage.replace(",", "."));
+    if (ageMap[ageRange] !== undefined) {
+      ageMap[ageRange] += percentage;
+      totalPercentage += percentage;
+    }
+  });
+
+  const ageChartContainer = document.getElementById("age-graph");
+
+  Object.keys(ageMap).forEach((ageRange) => {
+    const percentage = ((ageMap[ageRange] / totalPercentage) * 100).toFixed(2);
+    const ageBar = document.createElement("div");
+    ageBar.classList.add("age-bar");
+    ageBar.innerHTML = `
+      <label class="age-label">${ageRange}</label>
+      <progress class="age-progressbar" max="100" value="${percentage}"></progress>
+      <label class="age-percentage">${percentage}%</label>
+    `;
+    ageChartContainer.appendChild(ageBar);
+  });
+};
+
 const generateHoraryGraph = (data) => {
-  const horaryData = JSON.parse(data.post_moment_json);
+  const horaryData = data.post_moment_json;
 
   am4core.ready(function () {
     am4core.useTheme(am4themes_animated);
 
-    var chart = am4core.create("post-horary-graph", am4charts.XYChart);
+    let chart = am4core.create("post-horary-graph", am4charts.XYChart);
 
     chart.data = horaryData;
 
-    // Crea un eje Y
-    var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+    chart.cursor = new am4charts.XYCursor();
+    chart.cursor.behavior = "none";
+
+    let categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
     categoryAxis.dataFields.category = "type";
-    categoryAxis.renderer.grid.template.location = 0;
+    categoryAxis.renderer.grid.template.disabled = true;
+    categoryAxis.renderer.labels.template.fontSize = 10;
+    categoryAxis.renderer.labels.template.horizontalCenter = "left";
+    categoryAxis.renderer.minGridDistance = 0;
 
-    // Crea un eje X
-    var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
-    valueAxis.renderer.inversed = true;
+    let valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
+    valueAxis.min = 0;
+    valueAxis.renderer.grid.template.disabled = true;
+    valueAxis.renderer.labels.template.disabled = true;
 
-    // Configura la serie de barras horizontales
-    var series = chart.series.push(new am4charts.ColumnSeries());
+    let series = chart.series.push(new am4charts.ColumnSeries());
     series.dataFields.valueX = "value";
     series.dataFields.categoryY = "type";
-    series.columns.template.tooltipText = "{categoryY}: {valueX}%";
-
-    // Configura el color de las barras
-    series.columns.template.fill = am4core.color("#5B6F8E"); // Color predeterminado
-    series.columns.template.fillOpacity = 0.8;
-
-    // Configura la apariencia de las barras móviles (bullets)
-    var bullet = series.bullets.push(new am4charts.Bullet());
-    bullet.horizontalCenter = "middle";
-    bullet.verticalCenter = "middle";
-    bullet.width = 10; // Ancho del bullet
-    bullet.height = 30; // Altura del bullet
-    bullet.tooltipText = "{categoryY}: {valueX}%";
-
-    // Crea la imagen en el bullet
-    var image = bullet.createChild(am4core.Image);
-    image.width = 10; // Ancho de la imagen
-    image.height = 30; // Altura de la imagen
-    image.href = "{href}";
-
-    // Actualiza los colores de las barras con los colores proporcionados en los datos
+    series.columns.template.tooltipText = "{valueX}%";
+    series.columns.template.tooltipY = 0;
+    series.columns.template.strokeOpacity = 0;
+    series.columns.template.height = am4core.percent(40);
+    series.columns.template.column.cornerRadiusTopRight = 10;
+    series.columns.template.column.cornerRadiusBottomRight = 10;
     series.columns.template.adapter.add("fill", function (fill, target) {
       return am4core.color(target.dataItem.dataContext.color);
     });
 
-    // Habilita la exportación de la gráfica
-    chart.exporting.menu = new am4core.ExportMenu();
+    let bulletContainer = series.bullets.push(new am4core.Container());
+    bulletContainer.horizontalCenter = "left";
+    bulletContainer.verticalCenter = "middle";
+
+    let bullet = bulletContainer.createChild(am4core.Circle);
+    bullet.horizontalCenter = "left";
+    bullet.radius = 12;
+
+    let image = bulletContainer.createChild(am4core.Image);
+    image.horizontalCenter = "middle";
+    image.verticalCenter = "middle";
+    image.width = 16;
+    image.height = 16;
+    image.adapter.add("href", (href, target) => {
+      let dataItem = target.dataItem;
+      if (dataItem && dataItem.dataContext) {
+        return dataItem.dataContext.href;
+      }
+      return href;
+    });
+  });
+};
+
+const generateEngagementDayGraph = (data) => {
+  const dayData = data.post_day_json;
+
+  am4core.ready(function () {
+    am4core.useTheme(am4themes_animated);
+
+    let chart = am4core.create("engagement-rate-graph", am4charts.XYChart);
+
+    chart.data = dayData;
+    chart.padding(10);
+
+    let categoryAxisX = chart.xAxes.push(new am4charts.CategoryAxis());
+    categoryAxisX.dataFields.category = "day";
+    categoryAxisX.renderer.grid.template.strokeOpacity = 0;
+    categoryAxisX.renderer.minGridDistance = 1;
+    categoryAxisX.renderer.labels.horizontalCenter = "right";
+    categoryAxisX.renderer.labels.template.verticalCenter = "middle";
+
+    let valueAxisY = chart.yAxes.push(new am4charts.ValueAxis());
+    valueAxisY.min = 0;
+    valueAxisY.max = 3;
+
+    valueAxisY.renderer.labels.template.adapter.add("text", function (text) {
+      return text + "%";
+    });
+
+    let series = chart.series.push(new am4charts.ColumnSeries());
+    series.dataFields.categoryX = "day";
+    series.dataFields.valueY = "rate";
+    series.columns.template.tooltipText = "{valueY}%";
+    series.columns.template.tooltipY = 0;
+    series.columns.template.strokeOpacity = 0;
+
+    series.columns.template.adapter.add("fill", (fill, target) => {
+      return chart.colors.getIndex(target.dataItem.index);
+    });
   });
 };
