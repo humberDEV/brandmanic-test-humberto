@@ -14,9 +14,21 @@ const fetchInflucard = async () => {
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const data = await fetchInflucard();
-  fillCard(data);
+  Swal.fire({
+    timer: 2000,
+    didOpen: () => {
+      Swal.showLoading();
+    },
+  });
 
+  try {
+    const data = await fetchInflucard();
+    fillCard(data);
+
+    setTimeout(() => {
+      Swal.close();
+    }, 300);
+  } catch {}
   const profileImages = document.querySelectorAll(".container");
 
   profileImages.forEach((image) => {
@@ -27,16 +39,12 @@ document.addEventListener("DOMContentLoaded", async () => {
           Swal.showLoading();
         },
       }).then(() => {
-        const profileViewContainer = document.createElement("div");
-        profileViewContainer.classList.add("profile-view-enter");
-
         fetch("profile-view.html")
           .then((response) => response.text())
           .then((html) => {
-            profileViewContainer.innerHTML = html;
-            document.body.appendChild(profileViewContainer);
+            Swal.close();
             setTimeout(() => {
-              profileViewContainer.classList.add("active");
+              window.location.href = "profile-view.html";
             }, 100);
           });
       });

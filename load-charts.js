@@ -15,22 +15,111 @@ const fetchInflucard = async () => {
 
 const fillCharts = (data) => {
   const profileImage = document.getElementById("profile_image");
+  const username = document.getElementById("username");
+  const usernameRrss = document.getElementById("username-rrss");
+  const accountInfo = document.getElementById("account-info");
+  const dateData = document.getElementById("date-data");
+  const audienciaLabel = document.getElementById("e11-audiencia");
+  const fakesLabel = document.getElementById("e11-fakes");
+  const audienciaRealLabel = document.getElementById("e11-audiencia-real");
+  const audienciaDesemValue = document.getElementById("e13-audiencia-valor");
+  const alcanceDesemValue = document.getElementById("e13-alcance-valor");
+  const impresionesDesemValue = document.getElementById(
+    "e23-impresiones-valor"
+  );
+  const impresionesAlcanceValue = document.getElementById(
+    "e23-impresiones-alcance-valor"
+  );
+  const impresionesAudienciaValue = document.getElementById(
+    "e23-impresiones-audiencia-valor"
+  );
+  const reproduccionesValue = document.getElementById(
+    "e33-reproducciones-valor"
+  );
+  const reproduccionesAlcanceValue = document.getElementById(
+    "e33-reproducciones-alcance-valor"
+  );
+  const reproduccionesAudienciaValue = document.getElementById(
+    "e33-reproducciones-audiencia-valor"
+  );
+  const engagementValue = document.getElementById("e43-engagement-valor");
+  const engagementAlcanceValue = document.getElementById(
+    "e43-engagement-alcance-valor"
+  );
+  const engagementAudienciaValue = document.getElementById(
+    "e43-engagement-audiencia-valor"
+  );
+
+  const flagImg = document.createElement("img");
+  flagImg.src = `assets/flags/4x3/${data.country}.svg`;
+  flagImg.alt = "Flag";
+  flagImg.classList.add("country-flag");
+
+  const countryAbbr = document.createElement("span");
+  countryAbbr.textContent = `${data.country}-`;
+
+  const genderAgeText = document.createElement("span");
+  const genderText = data.gender === "1" ? " Mujer ♀️" : " Hombre ♂️";
+  genderAgeText.textContent = ` ${genderText}, ${data.age} años`;
+
+  accountInfo.appendChild(flagImg);
+  accountInfo.appendChild(countryAbbr);
+  accountInfo.appendChild(genderAgeText);
+
+  accountInfo.style.margin = "10px";
+  accountInfo.style.display = "flex";
+  accountInfo.style.alignItems = "center";
+
+  dateData.textContent = "Datos actualizados a " + data.updated_at_formated;
   profileImage.src = data.account_picture;
+  username.textContent = data.username;
+  usernameRrss.textContent = data.username;
+  audienciaLabel.textContent = data.followers_formated;
+  fakesLabel.textContent = data.fake_followers_formated + "%";
+  audienciaRealLabel.textContent = data.real_followers_formated;
+  audienciaDesemValue.textContent = data.followers_formated;
+  alcanceDesemValue.textContent = data.reach_formated;
+  impresionesDesemValue.textContent = data.impressions_formated;
+  impresionesAlcanceValue.textContent = data.ir_alcance + "%";
+  impresionesAudienciaValue.textContent = data.ir_audiencia + "%";
+  reproduccionesValue.textContent = data.vplays_formated;
+  reproduccionesAlcanceValue.textContent = data.vr_alcance + "%";
+  reproduccionesAudienciaValue.textContent = data.vr_audiencia + "%";
+  engagementValue.textContent = data.engagement_formated;
+  engagementAlcanceValue.textContent = data.er_alcance + "%";
+  engagementAudienciaValue.textContent = data.er_audiencia + "%";
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const data = await fetchInflucard();
-  fillCharts(data);
-  generateAgeGraph(data);
-  generateGenderGraph(data);
-  generateTerritoryGraph(data);
-  generateHoraryGraph(data);
-  generateEngagementDayGraph(data);
-  generateCountryGraph(data);
-  generateBrandsImages(data);
+  Swal.fire({
+    timer: 2000,
+    didOpen: () => {
+      Swal.showLoading();
+    },
+  });
+
+  try {
+    const data = await fetchInflucard();
+    fillCharts(data);
+    generateAgeGraph(data);
+    generateGenderGraph(data);
+    generateTerritoryGraph(data);
+    generateHoraryGraph(data);
+    generateEngagementDayGraph(data);
+    generateCountryGraph(data);
+    generateBrandsImages(data);
+    generateCircleGraphs(data);
+
+    Swal.close();
+  } catch (err) {
+    console.error(err);
+    Swal.close();
+  }
 
   const exitButton = document.getElementById("exit-button");
-  exitButton.addEventListener("click", () => {});
+  exitButton.addEventListener("click", () => {
+    window.location.href = "index.html";
+  });
 });
 
 // ---------
@@ -45,6 +134,72 @@ document.addEventListener("DOMContentLoaded", async () => {
 // ---------
 // ---------
 // ---------
+
+const generateCircleGraphs = (data) => {
+  const chartData = [
+    {
+      title: "Reach",
+      percentage: data.reach_formated_graph,
+      color: "blue",
+    },
+    {
+      title: "Relevance",
+      percentage: data.relevance_formated_graph,
+      color: "orange",
+    },
+    {
+      title: "Resonance",
+      percentage: data.resonance_formated_graph,
+      color: "aqua",
+    },
+  ];
+
+  const circleGraphsContainer = document.querySelector(".circle-graphs");
+
+  chartData.forEach((chart) => {
+    const chartContainer = document.createElement("div");
+    chartContainer.classList.add("chart-container");
+
+    const chartTitle = document.createElement("div");
+    chartTitle.textContent = chart.title;
+    chartTitle.style.fontSize = "12px"; // Establece el tamaño de fuente más pequeño
+    chartContainer.appendChild(chartTitle);
+
+    const canvas = document.createElement("canvas");
+    canvas.classList.add("chart");
+    chartContainer.appendChild(canvas);
+
+    circleGraphsContainer.appendChild(chartContainer);
+
+    chartContainer.style.width = "60px";
+    chartContainer.style.height = "60px";
+    chartContainer.style.display = "flex";
+    chartContainer.style.flexDirection = "column";
+    chartContainer.style.alignItems = "center";
+    chartContainer.style.justifyContent = "center";
+
+    new Chart(canvas, {
+      type: "doughnut",
+      data: {
+        datasets: [
+          {
+            data: [chart.percentage, 100 - chart.percentage],
+            backgroundColor: [chart.color, "lightgray"],
+          },
+        ],
+      },
+      options: {
+        cutout: "80%",
+        legend: {
+          display: false,
+        },
+        tooltips: {
+          enabled: false,
+        },
+      },
+    });
+  });
+};
 
 const generateAgeGraph = (data) => {
   const ageData = data.insightsAge;
@@ -265,17 +420,7 @@ const generateHoraryGraph = (data) => {
       return am4core.color(target.dataItem.dataContext.color);
     });
 
-    let bulletContainer = series.bullets.push(new am4core.Container());
-    bulletContainer.horizontalCenter = "left";
-    bulletContainer.verticalCenter = "middle";
-    bulletContainer.dx = -20;
-
-    let bullet = bulletContainer.createChild(am4core.Circle);
-    bullet.horizontalCenter = "middle";
-    bulletContainer.verticalCenter = "middle";
-    bullet.radius = 15;
-
-    let image = bulletContainer.createChild(am4core.Image);
+    let image = series.createChild(am4core.Image);
     image.horizontalCenter = "middle";
     image.verticalCenter = "middle";
     image.width = 20;

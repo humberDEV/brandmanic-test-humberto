@@ -12,31 +12,46 @@
       <div class="profile">
         <img id="profile_image" class="profile-image" alt="Foto de perfil" />
         <div class="user-info">
-          <div class="username">gracyvillareal</div>
+          <div class="username" id="username"></div>
           <div class="instagram">
             <i class="fa-brands fa-instagram"></i>
-            <span>gracyvillareal</span>
+            <span id="username-rrss"></span>
           </div>
-          <p id="account-info">{info}</p>
+          <div id="account-info"></div>
         </div>
       </div>
-      <div class="content">
-        <div id="chartDiv" class="grid"></div>
-      </div>
+      <div class="circle-graphs"></div>
       <div class="right-column">
         <a id="exit-button"><i class="fas fa-sign-out-alt"></i> Salir</a><br />
         <a><i class="fas fa-download"></i> Descargar Influcard</a><br />
         <a><i class="fas fa-user"></i> Ver perfil</a><br />
+        <span id="date-data"></span>
       </div>
     </div>
 
     <div class="content">
       <div class="column">
         <div id="audience" class="circle-icon">
-          <i class="fa-solid fa-user-group"></i>
-          AUDIENCIA
+          <i class="fa-solid fa-users-line" style="color: #ffffff"></i>
+          <span>AUDIENCIA</span>
         </div>
-        <div id="audience-stats">Elemento 2</div>
+        <div id="audience-stats">
+          <div class="dato-vertical">
+            <span>Audiencia</span>
+            <i class="fa-solid fa-user-group"></i>
+            <span id="e11-audiencia"></span>
+          </div>
+          <div class="dato-vertical">
+            <span>Seguidores Fake</span>
+            <i class="fa-solid fa-user-group"></i>
+            <span id="e11-fakes"></span>
+          </div>
+          <div class="dato-vertical">
+            <span>Audiencia Real</span>
+            <i class="fa-solid fa-user-group"></i>
+            <span id="e11-audiencia-real"></span>
+          </div>
+        </div>
         <div id="age-graph-card" class="auto-height">
           Distribución por edad
           <graph id="age-graph"></graph>
@@ -53,7 +68,10 @@
         </section>
       </div>
       <div class="column">
-        <div id="post">PUBLICACIONES</div>
+        <div id="post" class="circle-icon">
+          <i class="fa-solid fa-camera-retro"></i>
+          <span>PUBLICACIONES</span>
+        </div>
         <div id="territory-graph-card" class="auto-height">
           Distribución de publicaciones por territorio
           <graph id="territory-graph"></graph>
@@ -68,11 +86,82 @@
         </div>
       </div>
       <div class="column">
-        <div id="rate">DESEMPEÑO</div>
-        <div class="auto-height">Elemento 2</div>
-        <div class="auto-height">Elemento 3</div>
-        <div class="auto-height">Elemento 4</div>
-        <div class="auto-height">Elemento 5</div>
+        <div id="rate" class="circle-icon">
+          <i class="fa-solid fa-chart-line"></i>
+          <span>DESEMPEÑO</span>
+        </div>
+        <div id="desem-card" class="auto-height">
+          <div id="e13-audiencia">
+            <i class="fa-solid fa-user-group circle-icon"></i>
+            <span>Audiencia</span>
+            <span class="valor" id="e13-audiencia-valor">5k</span>
+          </div>
+          <div id="e13-alcance">
+            <i class="fa-solid fa-user-group circle-icon"></i>
+            <span>Alcance</span>
+            <span class="valor" id="e13-alcance-valor">5k</span>
+          </div>
+        </div>
+        <div id="impresiones-card" class="auto-height">
+          <div id="e23-impresiones">
+            <i
+              class="fa-solid fa-fingerprint circle-icon"
+              style="background-color: #015199"
+            ></i>
+            <span>Impresiones</span>
+            <span class="valor" id="e23-impresiones-valor">5k</span>
+          </div>
+          <div class="porcentajes">
+            <div class="dato-vertical">
+              <span id="e23-impresiones-alcance-valor">100%</span>
+              <span>Alcance</span>
+            </div>
+            <div class="dato-vertical">
+              <span id="e23-impresiones-audiencia-valor"></span>
+              <span>Audiencia</span>
+            </div>
+          </div>
+        </div>
+        <div id="reproducciones-card" class="auto-height">
+          <div id="e23-reproducciones">
+            <i
+              class="fa-solid fa-play circle-icon"
+              style="background-color: #0371e1"
+            ></i>
+            <span>Reproducciones</span>
+            <span class="valor" id="e33-reproducciones-valor">5k</span>
+          </div>
+          <div class="porcentajes">
+            <div class="dato-vertical">
+              <span id="e33-reproducciones-alcance-valor"></span>
+              <span>Alcance</span>
+            </div>
+            <div class="dato-vertical">
+              <span id="e33-reproducciones-audiencia-valor"></span>
+              <span>Audiencia</span>
+            </div>
+          </div>
+        </div>
+        <div id="engagement-card" class="auto-height">
+          <div id="e23-engagement">
+            <i
+              class="fa-solid fa-heart circle-icon"
+              style="background-color: #00a4f8"
+            ></i>
+            <span>Engagement</span>
+            <span class="valor" id="e43-engagement-valor"></span>
+          </div>
+          <div class="porcentajes">
+            <div class="dato-vertical">
+              <span id="e43-engagement-alcance-valor"></span>
+              <span>Alcance</span>
+            </div>
+            <div class="dato-vertical">
+              <span id="e43-engagement-audiencia-valor"></span>
+              <span>Audiencia</span>
+            </div>
+          </div>
+        </div>
         <div id="engagement-rate-graph-card">
           Engagement rate según día de publicación
           <graph id="engagement-rate-graph"></graph>
@@ -82,6 +171,7 @@
 
     <!-- Scripts -->
     <script src="load-charts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
     <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
     <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>

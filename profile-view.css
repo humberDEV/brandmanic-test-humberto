@@ -14,6 +14,8 @@ body {
   font-family: var(--primary-font);
   overflow: hidden;
   color: var(--text-color);
+  min-width: 400px;
+  min-height: 1000px;
 }
 
 .navbar {
@@ -28,7 +30,7 @@ body {
   align-items: center;
 }
 
-.profile img {
+.profile-image {
   border-radius: 5em 5em 1em 5em;
   margin-right: 10px;
   margin-left: 20px;
@@ -71,6 +73,29 @@ body {
   height: 80vh;
 }
 
+.circle-graphs {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+}
+
+.chart-container {
+  margin-right: 20px;
+}
+
+.chart-container:last-child {
+  margin-right: 0;
+}
+
+.chart {
+  width: 30px;
+  height: 30px;
+}
+
 .column {
   display: flex;
   flex-direction: column;
@@ -79,9 +104,8 @@ body {
 .column > div,
 .column > * > * {
   margin-top: 10px;
-  background-color: var(--box-background);
   border-radius: var(--box-border-radius);
-  padding: 20px;
+  padding: 15px;
   box-shadow: var(--box-shadow);
   display: flex;
   flex-direction: column;
@@ -103,13 +127,9 @@ graph {
   box-shadow: none;
 }
 
-#territory-graph {
-  height: 200%;
-}
-
 .right-column {
   margin-left: auto;
-  text-align: justify;
+  text-align: left;
   margin-right: 20px;
 }
 
@@ -121,6 +141,14 @@ graph {
 .right-column a:hover {
   color: var(--link-hover-color);
   cursor: pointer;
+}
+
+#date-data {
+  font-size: 0.8em;
+}
+
+#territory-graph {
+  height: 200%;
 }
 
 #double-column {
@@ -143,17 +171,81 @@ graph {
   font-size: 1.2em;
   font-weight: 600;
   display: flex;
+  justify-content: flex-start;
+  align-items: center;
   flex-direction: row;
 }
 
-#audience.circle-icon > i {
-  background-color: #b4d0e5;
+#audience > *,
+#post > *,
+#rate > * {
+  box-shadow: none;
+}
+
+#audience.circle-icon > i,
+#post.circle-icon > i,
+#rate.circle-icon > i,
+i.circle-icon {
+  background-color: #4c99e2;
   border-radius: 50%;
   color: white;
 }
 
+i.circle-icon {
+  background-color: rgb(10, 10, 58);
+  width: 34px;
+  height: 34px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 15px;
+}
+
+#e13-audiencia,
+#e13-alcance,
+#e23-impresiones,
+#e23-reproducciones,
+#e23-engagement {
+  display: flex;
+  flex-direction: row;
+  background-color: none;
+  box-shadow: none;
+  width: 100%;
+  height: 1px;
+}
+
+#impresiones-card,
+#reproducciones-card,
+#engagement-card {
+  height: 9vh;
+}
+
+.valor {
+  margin-left: auto;
+  font-weight: bold;
+}
+
+.porcentajes {
+  display: flex;
+  flex-direction: row;
+  gap: 10em;
+  font-size: 0.8em;
+  box-shadow: none;
+}
+
+.dato-vertical {
+  box-shadow: none;
+  background: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
 #audience-stats {
   height: 8vh;
+  display: flex;
+  flex-direction: row;
+  gap: 3em;
 }
 
 #post-horary-graph-card {
@@ -204,7 +296,7 @@ graph {
 }
 
 .country-flag {
-  width: 20;
+  width: 20px;
   height: 15px;
 }
 
@@ -229,6 +321,7 @@ progress.country-progressbar::-webkit-progress-value {
 #brands-graph-card {
   text-align: center;
   contain: content;
+  padding: 30px;
 }
 
 .brands-grid {
