@@ -304,10 +304,12 @@ progress {
   height: 5px;
   border-radius: 7px;
 }
+
 progress::-webkit-progress-bar {
   background-color: lightgray;
   border-radius: 7px;
 }
+
 progress::-webkit-progress-value {
   background-color: #4aa0eb;
   border-radius: 7px;

@@ -13,83 +13,6 @@ const fetchInflucard = async () => {
   }
 };
 
-const fillCharts = (data) => {
-  const profileImage = document.getElementById("profile_image");
-  const username = document.getElementById("username");
-  const usernameRrss = document.getElementById("username-rrss");
-  const accountInfo = document.getElementById("account-info");
-  const dateData = document.getElementById("date-data");
-  const audienciaLabel = document.getElementById("e11-audiencia");
-  const fakesLabel = document.getElementById("e11-fakes");
-  const audienciaRealLabel = document.getElementById("e11-audiencia-real");
-  const audienciaDesemValue = document.getElementById("e13-audiencia-valor");
-  const alcanceDesemValue = document.getElementById("e13-alcance-valor");
-  const impresionesDesemValue = document.getElementById(
-    "e23-impresiones-valor"
-  );
-  const impresionesAlcanceValue = document.getElementById(
-    "e23-impresiones-alcance-valor"
-  );
-  const impresionesAudienciaValue = document.getElementById(
-    "e23-impresiones-audiencia-valor"
-  );
-  const reproduccionesValue = document.getElementById(
-    "e33-reproducciones-valor"
-  );
-  const reproduccionesAlcanceValue = document.getElementById(
-    "e33-reproducciones-alcance-valor"
-  );
-  const reproduccionesAudienciaValue = document.getElementById(
-    "e33-reproducciones-audiencia-valor"
-  );
-  const engagementValue = document.getElementById("e43-engagement-valor");
-  const engagementAlcanceValue = document.getElementById(
-    "e43-engagement-alcance-valor"
-  );
-  const engagementAudienciaValue = document.getElementById(
-    "e43-engagement-audiencia-valor"
-  );
-
-  const flagImg = document.createElement("img");
-  flagImg.src = `assets/flags/4x3/${data.country}.svg`;
-  flagImg.alt = "Flag";
-  flagImg.classList.add("country-flag");
-
-  const countryAbbr = document.createElement("span");
-  countryAbbr.textContent = `${data.country}-`;
-
-  const genderAgeText = document.createElement("span");
-  const genderText = data.gender === "1" ? " Mujer ♀️" : " Hombre ♂️";
-  genderAgeText.textContent = ` ${genderText}, ${data.age} años`;
-
-  accountInfo.appendChild(flagImg);
-  accountInfo.appendChild(countryAbbr);
-  accountInfo.appendChild(genderAgeText);
-
-  accountInfo.style.margin = "10px";
-  accountInfo.style.display = "flex";
-  accountInfo.style.alignItems = "center";
-
-  dateData.textContent = "Datos actualizados a " + data.updated_at_formated;
-  profileImage.src = data.account_picture;
-  username.textContent = data.username;
-  usernameRrss.textContent = data.username;
-  audienciaLabel.textContent = data.followers_formated;
-  fakesLabel.textContent = data.fake_followers_formated + "%";
-  audienciaRealLabel.textContent = data.real_followers_formated;
-  audienciaDesemValue.textContent = data.followers_formated;
-  alcanceDesemValue.textContent = data.reach_formated;
-  impresionesDesemValue.textContent = data.impressions_formated;
-  impresionesAlcanceValue.textContent = data.ir_alcance + "%";
-  impresionesAudienciaValue.textContent = data.ir_audiencia + "%";
-  reproduccionesValue.textContent = data.vplays_formated;
-  reproduccionesAlcanceValue.textContent = data.vr_alcance + "%";
-  reproduccionesAudienciaValue.textContent = data.vr_audiencia + "%";
-  engagementValue.textContent = data.engagement_formated;
-  engagementAlcanceValue.textContent = data.er_alcance + "%";
-  engagementAudienciaValue.textContent = data.er_audiencia + "%";
-};
-
 document.addEventListener("DOMContentLoaded", async () => {
   Swal.fire({
     timer: 2000,
@@ -101,14 +24,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     const data = await fetchInflucard();
     fillCharts(data);
-    generateAgeGraph(data);
-    generateGenderGraph(data);
-    generateTerritoryGraph(data);
-    generateHoraryGraph(data);
-    generateEngagementDayGraph(data);
-    generateCountryGraph(data);
-    generateBrandsImages(data);
-    generateCircleGraphs(data);
 
     Swal.close();
   } catch (err) {
@@ -122,18 +37,92 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 });
 
-// ---------
-// ---------
-// ---------
-// ---------
-// ---------
-// ---------
-// ---------
-// ---------
-// ---------
-// ---------
-// ---------
-// ---------
+const fillCharts = (data) => {
+  // Generar todas las gráficas
+  generateAgeGraph(data);
+  generateGenderGraph(data);
+  generateTerritoryGraph(data);
+  generateHoraryGraph(data);
+  generateEngagementDayGraph(data);
+  generateCountryGraph(data);
+  generateBrandsImages(data);
+  generateCircleGraphs(data);
+
+  const getElement = (id) => document.getElementById(id);
+
+  const updateTextContent = (elementId, value) => {
+    const element = getElement(elementId);
+    if (element) {
+      element.textContent = value;
+    }
+  };
+
+  const updateProfileImage = (src) => {
+    const profileImage = getElement("profile_image");
+    if (profileImage) {
+      profileImage.src = src;
+    }
+  };
+
+  const updateAccountInfo = (country, gender, age) => {
+    const accountInfo = getElement("account-info");
+    if (accountInfo) {
+      const flagImg = document.createElement("img");
+      flagImg.src = `assets/flags/4x3/${country}.svg`;
+      flagImg.alt = "Flag";
+      flagImg.classList.add("country-flag");
+
+      const countryAbbr = document.createElement("span");
+      countryAbbr.textContent = `${country}-`;
+
+      const genderText = gender === "1" ? " Mujer ♀️" : " Hombre ♂️";
+      const genderAgeText = document.createElement("span");
+      genderAgeText.textContent = ` ${genderText}, ${age} años`;
+
+      accountInfo.innerHTML = ""; // Limpiar el contenido anterior
+      accountInfo.appendChild(flagImg);
+      accountInfo.appendChild(countryAbbr);
+      accountInfo.appendChild(genderAgeText);
+
+      accountInfo.style.margin = "10px";
+      accountInfo.style.display = "flex";
+      accountInfo.style.alignItems = "center";
+    }
+  };
+
+  const updateDateData = (updatedAt) => {
+    const dateData = getElement("date-data");
+    if (dateData) {
+      dateData.textContent = `Datos actualizados a ${updatedAt}`;
+    }
+  };
+
+  // Actualizar todos los elementos de texto
+  updateTextContent("username", data.username);
+  updateTextContent("username-rrss", data.username);
+  updateTextContent("e11-audiencia", data.followers_formated);
+  updateTextContent("e11-fakes", data.fake_followers_formated + "%");
+  updateTextContent("e11-audiencia-real", data.real_followers_formated);
+  updateTextContent("e13-audiencia-valor", data.followers_formated);
+  updateTextContent("e13-alcance-valor", data.reach_formated);
+  updateTextContent("e23-impresiones-valor", data.impressions_formated);
+  updateTextContent("e23-impresiones-alcance-valor", data.ir_alcance + "%");
+  updateTextContent("e23-impresiones-audiencia-valor", data.ir_audiencia + "%");
+  updateTextContent("e33-reproducciones-valor", data.vplays_formated);
+  updateTextContent("e33-reproducciones-alcance-valor", data.vr_alcance + "%");
+  updateTextContent(
+    "e33-reproducciones-audiencia-valor",
+    data.vr_audiencia + "%"
+  );
+  updateTextContent("e43-engagement-valor", data.engagement_formated);
+  updateTextContent("e43-engagement-alcance-valor", data.er_alcance + "%");
+  updateTextContent("e43-engagement-audiencia-valor", data.er_audiencia + "%");
+
+  // Actualizar elementos especiales
+  updateProfileImage(data.account_picture);
+  updateAccountInfo(data.country, data.gender, data.age);
+  updateDateData(data.updated_at_formated);
+};
 
 const generateCircleGraphs = (data) => {
   const chartData = [
