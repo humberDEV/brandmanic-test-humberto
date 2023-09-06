@@ -1,7 +1,7 @@
 const fetchInflucard = async () => {
   try {
     const response = await fetch(
-      "https://prueba-brandmanic-humberto.netlify.app/data.json"
+      "https://prueba-brandmanic-humberto.netlify.app/src/data.json"
     );
 
     if (!response.ok) throw new Error("Error fetching data.");
