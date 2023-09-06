@@ -1,6 +1,8 @@
 const fetchInflucard = async () => {
   try {
-    const response = await fetch("http://127.0.0.1:5500/src/data.json");
+    const response = await fetch(
+      "https://prueba-brandmanic-humberto.netlify.app/data.json"
+    );
 
     if (!response.ok) throw new Error("Error fetching data.");
 
@@ -24,6 +26,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     const data = await fetchInflucard();
     fillCard(data);
+
+    const numberOfExtraCards = 12;
+
+    const cardContainer = document.getElementById("card-container");
+
+    for (let i = 0; i < numberOfExtraCards; i++) {
+      const cardClone = document.querySelector(".card").cloneNode(true);
+      cardContainer.appendChild(cardClone);
+    }
 
     setTimeout(() => {
       Swal.close();
@@ -69,21 +80,25 @@ function fillCard(data) {
     avg_impressions_formated,
   } = data;
 
-  const profileImage = document.getElementById("profile_image");
-  const rrssIcon = document.getElementById("rrss_icon");
-  const usernameElement = document.getElementById("username");
-  const genderAge = document.getElementById("gender_age");
-  const locationDescription = document.getElementById("location_description");
-  const interestsElement = document.getElementById("interests");
-  const profileName = document.getElementById("profile_name");
-  const audienceStat = document.getElementById("audience_stat");
-  const fakesStat = document.getElementById("fakes_stat");
-  const mediaEngStat = document.getElementById("media_eng_stat");
-  const engRateStat = document.getElementById("eng_rate_stat");
-  const impressionsStat = document.getElementById("impressions_stat");
+  const getElement = (id) => document.getElementById(id);
+
+  const profileImage = getElement("profile_image");
+  const rrssIcon = getElement("rrss_icon");
+  const usernameElement = getElement("username");
+  const genderAge = getElement("gender_age");
+  const locationDescription = getElement("location_description");
+  const interestsElement = getElement("interests");
+  const profileName = getElement("profile_name");
+  const audienceStat = getElement("audience_stat");
+  const fakesStat = getElement("fakes_stat");
+  const mediaEngStat = getElement("media_eng_stat");
+  const engRateStat = getElement("eng_rate_stat");
+  const impressionsStat = getElement("impressions_stat");
+  const flagIcon = getElement("flag-icon");
 
   setClass(rrssIcon, rrss_icon);
   setImage(profileImage, account_picture);
+  setFlag(flagIcon, country);
   setText(usernameElement, username);
   setGenderAge(genderAge, gender, age);
   setLocation(locationDescription, country);
@@ -103,6 +118,10 @@ function setClass(element, className) {
 function setImage(imageElement, src) {
   imageElement.src = src;
   imageElement.alt = "Foto de perfil";
+}
+
+function setFlag(flagElement, country) {
+  flagElement.src = `assets/flags/4x3/${country}.svg`;
 }
 
 function setText(element, text) {

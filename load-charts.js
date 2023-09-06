@@ -1,6 +1,8 @@
 const fetchInflucard = async () => {
   try {
-    const response = await fetch("http://127.0.0.1:5500/src/data.json");
+    const response = await fetch(
+      "https://prueba-brandmanic-humberto.netlify.app/src/data.json"
+    );
 
     if (!response.ok) throw new Error("Error fetching data.");
 
@@ -73,13 +75,13 @@ const fillCharts = (data) => {
       flagImg.classList.add("country-flag");
 
       const countryAbbr = document.createElement("span");
-      countryAbbr.textContent = `${country}-`;
+      countryAbbr.textContent = `${country}- `;
 
       const genderText = gender === "1" ? " Mujer ♀️" : " Hombre ♂️";
       const genderAgeText = document.createElement("span");
       genderAgeText.textContent = ` ${genderText}, ${age} años`;
 
-      accountInfo.innerHTML = ""; // Limpiar el contenido anterior
+      accountInfo.innerHTML = "";
       accountInfo.appendChild(flagImg);
       accountInfo.appendChild(countryAbbr);
       accountInfo.appendChild(genderAgeText);
